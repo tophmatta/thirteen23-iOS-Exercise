@@ -152,7 +152,7 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             
             
             }) { (finished) -> Void in
-                
+                fromViewController.view.removeFromSuperview()
                 transitionContext.completeTransition(finished)
                 
         }
