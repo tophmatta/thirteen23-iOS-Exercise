@@ -10,61 +10,151 @@ import UIKit
 
 class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
-    let duration = 1.0
-    var presenting = true
-    var originFrame = CGRect.zero
+    let duration = 0.75
     
+    // Set duration of transition
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return duration
     }
     
+    // Tell animator object to perform transition
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         
+        // Create container view
         let containerView = transitionContext.containerView()!
         containerView.backgroundColor = UIColor.purpleColor()
         
+        // Create to and from VCs
         let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
-        
+
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         
-        let offScreenBottom = CGAffineTransformMakeTranslation(containerView.bounds.width/2, 2*containerView.bounds.height)
         
-        let offScreenTop = CGAffineTransformMakeTranslation(containerView.bounds.width/2, -2*containerView.bounds.height)
-        
-        let offScreenLeft = CGAffineTransformMakeTranslation(-containerView.bounds.width*2, containerView.bounds.height/2)
-        
-        let offScreenRight = CGAffineTransformMakeTranslation(containerView.bounds.width*2, containerView.bounds.height/2)
-        
-        let screenMidX = UIScreen.mainScreen().bounds.width/2
-        let screenMidY = UIScreen.mainScreen().bounds.height/2
+        // Designate final frame when animation completes
+        let finalFrame = transitionContext.finalFrameForViewController(toViewController)
         
         
+        // Starting region from toViewController based on transition direction needed
+        let offsetScreenBottom = UIScreen.mainScreen().bounds.height
         
+        let offsetScreenTop = -UIScreen.mainScreen().bounds.height
+        
+        let offsetScreenRight = UIScreen.mainScreen().bounds.width
+        
+        let offsetScreenLeft = -UIScreen.mainScreen().bounds.width
+        
+        
+        // Set initial starting point of toVC view based on fromVC
+        
+        // From home to view 1,2, or 3
         if fromViewController.view is HomeView{
-            toViewController.view.transform = offScreenBottom
+            toViewController.view.frame = CGRectOffset(finalFrame, 0, offsetScreenBottom)
         }
         
-        containerView.addSubview(toViewController.view)        
+        
+        
+        // From view1 to home
+        if fromViewController.view is ViewNumberOne && toViewController.view is HomeView {
+            toViewController.view.frame = CGRectOffset(finalFrame, 0, offsetScreenTop)
+        }
+        
+        // From view1 to view2
+        if fromViewController.view is ViewNumberOne && toViewController.view is ViewNumberTwo{
+            toViewController.view.frame = CGRectOffset(finalFrame, offsetScreenRight, 0)
+        }
+        
+        
+        // From view2 to home
+        if fromViewController.view is ViewNumberTwo && toViewController.view is HomeView {
+            toViewController.view.frame = CGRectOffset(finalFrame, 0, offsetScreenTop)
+        }
+        
+        // From view2 to view1
+        if fromViewController.view is ViewNumberTwo && toViewController.view is ViewNumberOne{
+            toViewController.view.frame = CGRectOffset(finalFrame, offsetScreenLeft, 0)
+        }
+        
+        // From view2 to view3
+        if fromViewController.view is ViewNumberTwo && toViewController.view is ViewNumberThree{
+            toViewController.view.frame = CGRectOffset(finalFrame, offsetScreenRight, 0)
+        }
+        
+        
+        // From view3 to home
+        if fromViewController.view is ViewNumberThree && toViewController.view is HomeView {
+            toViewController.view.frame = CGRectOffset(finalFrame, 0, offsetScreenTop)
+        }
+        
+        // From view3 to view2
+        if fromViewController.view is ViewNumberThree && toViewController.view is ViewNumberTwo{
+            toViewController.view.frame = CGRectOffset(finalFrame, offsetScreenLeft, 0)
+        }
+        
+        
+        // Add to and from VCs for transition to container view
+        containerView.addSubview(toViewController.view)
+        containerView.addSubview(fromViewController.view)
         
     
-        
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
+        // Call animation on toVC and fromVC
+        UIView.animateWithDuration(duration, animations: { () -> Void in
             
-            
-            
-            
-            toViewController.view.transform = CGAffineTransformMakeTranslation(screenMidX, screenMidY)
-            
+            // From home to view 1,2, or 3
             if fromViewController.view is HomeView{
-                fromViewController.view.transform = CGAffineTransformMakeTranslation(0, -containerView.bounds.height)
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(0, offsetScreenTop)
+                toViewController.view.frame = finalFrame
             }
             
             
+            // From view1 to home
+            if fromViewController.view is ViewNumberOne && toViewController.view is HomeView{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(0, offsetScreenBottom)
+                toViewController.view.frame = finalFrame
+            }
+            
+            // From view1  to view2
+            if fromViewController.view is ViewNumberOne && toViewController.view is ViewNumberTwo{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(offsetScreenLeft, 0)
+                toViewController.view.frame = finalFrame
+            }
+            
+            
+            // From view2 to home
+            if fromViewController.view is ViewNumberTwo && toViewController.view is HomeView{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(0, offsetScreenBottom)
+                toViewController.view.frame = finalFrame
+            }
+            
+            // From view2 to view1
+            if fromViewController.view is ViewNumberTwo && toViewController.view is ViewNumberOne{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(offsetScreenRight, 0)
+                toViewController.view.frame = finalFrame
+            }
+            
+            // From view2 to view3
+            if fromViewController.view is ViewNumberTwo && toViewController.view is ViewNumberThree{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(offsetScreenLeft, 0)
+                toViewController.view.frame = finalFrame
+            }
+            
+            
+            // From view3 to home
+            if fromViewController.view is ViewNumberThree && toViewController.view is HomeView{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(0, offsetScreenBottom)
+                toViewController.view.frame = finalFrame
+            }
+            
+            // From view3  to view2
+            if fromViewController.view is ViewNumberThree && toViewController.view is ViewNumberTwo{
+                fromViewController.view.transform = CGAffineTransformMakeTranslation(offsetScreenRight, 0)
+                toViewController.view.frame = finalFrame
+            }
+            
             
             }) { (finished) -> Void in
+                
                 transitionContext.completeTransition(finished)
                 
-                print(finished)
         }
         
         

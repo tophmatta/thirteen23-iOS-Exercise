@@ -337,7 +337,6 @@ class ViewControllerOne: UIViewController {
         
         // Initialize left gesture view and set props
         self.leftGestureView = UIView()
-        self.leftGestureView.backgroundColor = UIColor.purpleColor()
         self.leftGestureView.translatesAutoresizingMaskIntoConstraints = false
         
         // Add to super view
@@ -358,16 +357,10 @@ class ViewControllerOne: UIViewController {
         
     }
     
-    
-    
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
 extension ViewControllerOne: UIViewControllerTransitioningDelegate{
@@ -377,12 +370,4 @@ extension ViewControllerOne: UIViewControllerTransitioningDelegate{
         return transition
         
     }
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        return transition
-        
-    }
-    
-
 }

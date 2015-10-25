@@ -61,7 +61,7 @@ class HomeView: UIView {
         self.homeViewLabel = UILabel()
         
         // Set label props
-        self.homeViewLabel.text = "Home"
+        self.homeViewLabel.text = "home"
         self.homeViewLabel.textColor = UIColor.whiteColor()
         self.homeViewLabel.textAlignment = NSTextAlignment.Center
         self.homeViewLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 30)

@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     var leftGestureView: UIView!
     
     // Create circleView labels
-    var labelHome: UILabel!
     var labelOne: UILabel!
     var labelTwo: UILabel!
     var labelThree: UILabel!
@@ -132,7 +131,6 @@ class ViewController: UIViewController {
             if touchInsideCircleViewTop {
                 
                 // Set delegate for custom transition
-                
                 viewOne.transitioningDelegate = self
                 viewOne.modalPresentationStyle = UIModalPresentationStyle.Custom
                 
@@ -153,7 +151,7 @@ class ViewController: UIViewController {
                 viewTwo.transitioningDelegate = self
                 viewTwo.modalPresentationStyle = UIModalPresentationStyle.Custom
                 
-                // Transition to viewOne
+                // Transition to viewTwo
                 presentViewController(viewTwo, animated: true, completion: nil)
                 
                 print("this worked middle")
@@ -170,7 +168,7 @@ class ViewController: UIViewController {
                 viewThree.transitioningDelegate = self
                 viewThree.modalPresentationStyle = UIModalPresentationStyle.Custom
                 
-                // Transition to viewOne
+                // Transition to viewThree
                 presentViewController(viewThree, animated: true, completion: nil)
                 
                 print("this worked bottom")
@@ -285,7 +283,7 @@ class ViewController: UIViewController {
                 viewTwo.transitioningDelegate = self
                 viewTwo.modalPresentationStyle = UIModalPresentationStyle.Custom
                 
-                // Transition to viewOne
+                // Transition to viewTwo
                 presentViewController(viewTwo, animated: true, completion: nil)
                 
                 print("this worked middle")
@@ -302,7 +300,7 @@ class ViewController: UIViewController {
                 viewThree.transitioningDelegate = self
                 viewThree.modalPresentationStyle = UIModalPresentationStyle.Custom
                 
-                // Transition to viewOne
+                // Transition to viewThree
                 presentViewController(viewThree, animated: true, completion: nil)
                 
                 print("this worked bottom")
@@ -429,16 +427,10 @@ class ViewController: UIViewController {
         
     }
     
-    
-    
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
 extension ViewController: UIViewControllerTransitioningDelegate{
@@ -448,11 +440,4 @@ extension ViewController: UIViewControllerTransitioningDelegate{
         return transition
         
     }
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        return transition
-        
-    }
 }
-
